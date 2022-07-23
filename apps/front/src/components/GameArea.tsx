@@ -43,10 +43,10 @@ const Cross = () => {
 
 type GameAreaProps = {
   game: Game;
+  canMutate: boolean;
   onPut: (y: number, x: number) => void;
 };
 export const GameArea = (props: GameAreaProps) => {
-  console.log(JSON.stringify(props.game.cells, null, 2));
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-y-12">
       <div className="w-48 h-48 border border-gray-700">
@@ -57,11 +57,12 @@ export const GameArea = (props: GameAreaProps) => {
                 key={x}
                 className={clsx(
                   "w-16 h-16 border border-gray-700",
-                  !props.game.gameResult &&
+                  props.canMutate &&
+                    !props.game.gameResult &&
                     props.game.canPut(y, x) &&
                     "hover:bg-gray-700/20 cursor-pointer"
                 )}
-                onClick={() => props.onPut(y, x)}
+                onClick={() => props.canMutate && props.onPut(y, x)}
               >
                 {cell === 1 ? <Nought /> : cell === 2 ? <Cross /> : ""}
               </div>

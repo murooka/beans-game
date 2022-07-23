@@ -9,6 +9,11 @@ export default function TicTacToeIndex() {
             <a>ローカルプレイ</a>
           </Link>
         </li>
+        <li>
+          <Link href="/tic-tac-toe/solo">
+            <a>ソロプレイ</a>
+          </Link>
+        </li>
         <li>ルームを作成</li>
         <li>ルームに参加</li>
       </ul>

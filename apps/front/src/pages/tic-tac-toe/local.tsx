@@ -8,7 +8,7 @@ export default function TicTacToeLocal() {
   const onPut = (y: number, x: number) => setGame(game.put(y, x));
   return (
     <div className="w-full h-screen">
-      <GameArea game={game} onPut={onPut} />
+      <GameArea game={game} onPut={onPut} canMutate />
     </div>
   );
 }
