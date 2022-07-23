@@ -2,7 +2,9 @@
   "name": "beans-game",
   "version": "1.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "run-p dev:*",
+    "dev:front": "npm -w apps/front run dev",
+    "dev:tic-tac-toe": "npm -w packages/tic-tac-toe run dev"
   },
   "private": true,
   "workspaces": [
@@ -18,6 +20,7 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-import-resolver-typescript": "3.3.0",
     "eslint-plugin-import": "2.26.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "2.7.1",
     "typescript": "4.7.4"
   }
