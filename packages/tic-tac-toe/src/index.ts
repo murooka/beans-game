@@ -73,13 +73,6 @@ export class Game {
   }
 
   private calculateGameResult(): GameResult | null {
-    const filled = range(0, 2)
-      .flatMap((y) => range(0, 2).map((x) => this.cells[y][x]))
-      .every((cell) => cell != null);
-    if (filled) {
-      return { type: "draw" };
-    }
-
     for (const playerId of Game.playerIds) {
       const lines = [
         { origin: { y: 0, x: 0 }, dx: 0, dy: 1 },
@@ -104,6 +97,14 @@ export class Game {
         }
       }
     }
+
+    const filled = range(0, 2)
+      .flatMap((y) => range(0, 2).map((x) => this.cells[y][x]))
+      .every((cell) => cell != null);
+    if (filled) {
+      return { type: "draw" };
+    }
+
     return null;
   }
 }
