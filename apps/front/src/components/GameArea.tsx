@@ -45,8 +45,16 @@ type GameAreaProps = {
   game: Game;
   canMutate: boolean;
   onPut: (y: number, x: number) => void;
+  playerName?: (playerId: string) => string;
 };
 export const GameArea = (props: GameAreaProps) => {
+  const getPlayerName =
+    props.playerName ||
+    ((playerId: string): string => {
+      if (playerId === props.game.players[0].id) return "◯";
+      if (playerId === props.game.players[1].id) return "×";
+      return "?";
+    });
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-y-12">
       <div className="w-48 h-48 border border-gray-700">
@@ -78,22 +86,12 @@ export const GameArea = (props: GameAreaProps) => {
       </div>
       {!props.game.gameResult && (
         <p className="text-3xl">
-          {props.game.turnPlayerIndex === 0
-            ? "◯"
-            : props.game.turnPlayerIndex === 1
-            ? "×"
-            : "?"}
-          の手番
+          {getPlayerName(props.game.turnPlayerId) + "の手番"}
         </p>
       )}
       {props.game.gameResult && props.game.gameResult.type === "win" && (
         <p className="text-3xl">
-          {props.game.gameResult.winnerId === props.game.players[0].id
-            ? "◯"
-            : props.game.gameResult.winnerId === props.game.players[1].id
-            ? "×"
-            : "?"}
-          の勝利
+          {getPlayerName(props.game.gameResult.winnerId) + "の勝ち"}
         </p>
       )}
       {props.game.gameResult && props.game.gameResult.type === "draw" && (

@@ -46,12 +46,16 @@ const ViewPlaying = (props: ViewPlayingProps) => {
   const onPut = (y: number, x: number) => {
     socket.emit("put", props.roomId, y, x);
   };
+  const getPlayerName = (playerId: string): string => {
+    return playerId === props.playerId ? "あなた" : "あいて";
+  };
   return (
     <div>
       <GameArea
         game={game}
         canMutate={props.playerId === game.turnPlayerId}
         onPut={onPut}
+        playerName={getPlayerName}
       />
     </div>
   );

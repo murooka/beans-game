@@ -24,9 +24,17 @@ export default function TicTacToeSolo() {
     setGame(game.put(y, x));
   }, [game, setGame, isMyTurn]);
   const onPut = (y: number, x: number) => setGame(game.put(y, x));
+  const getPlayerName = (playerId: string): string => {
+    return playerId === game.players[0].id ? "あなた" : "あいて";
+  };
   return (
     <div className="w-full h-screen">
-      <GameArea game={game} onPut={onPut} canMutate={isMyTurn} />
+      <GameArea
+        game={game}
+        onPut={onPut}
+        canMutate={isMyTurn}
+        playerName={getPlayerName}
+      />
     </div>
   );
 }
