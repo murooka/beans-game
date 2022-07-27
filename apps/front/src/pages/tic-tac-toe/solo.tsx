@@ -15,7 +15,7 @@ const cpuLevel1 = (game: Game): { y: number; x: number } => {
 
 export default function TicTacToeSolo() {
   const [game, setGame] = useState(new Game());
-  const isMyTurn = game.turnPlayerId === 1;
+  const isMyTurn = game.turnPlayerIndex === 0;
   useEffect(() => {
     if (game.gameResult) return;
     if (isMyTurn) return;

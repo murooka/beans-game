@@ -64,7 +64,13 @@ export const GameArea = (props: GameAreaProps) => {
                 )}
                 onClick={() => props.canMutate && props.onPut(y, x)}
               >
-                {cell === 1 ? <Nought /> : cell === 2 ? <Cross /> : ""}
+                {cell === props.game.players[0].id ? (
+                  <Nought />
+                ) : cell === props.game.players[1].id ? (
+                  <Cross />
+                ) : (
+                  ""
+                )}
               </div>
             ))}
           </div>
@@ -72,9 +78,9 @@ export const GameArea = (props: GameAreaProps) => {
       </div>
       {!props.game.gameResult && (
         <p className="text-3xl">
-          {props.game.turnPlayerId === 1
+          {props.game.turnPlayerIndex === 0
             ? "◯"
-            : props.game.turnPlayerId === 2
+            : props.game.turnPlayerIndex === 1
             ? "×"
             : "?"}
           の手番
@@ -82,9 +88,9 @@ export const GameArea = (props: GameAreaProps) => {
       )}
       {props.game.gameResult && props.game.gameResult.type === "win" && (
         <p className="text-3xl">
-          {props.game.gameResult.winnerId === 1
+          {props.game.gameResult.winnerId === props.game.players[0].id
             ? "◯"
-            : props.game.gameResult.winnerId === 2
+            : props.game.gameResult.winnerId === props.game.players[1].id
             ? "×"
             : "?"}
           の勝利
