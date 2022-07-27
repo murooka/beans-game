@@ -50,6 +50,10 @@ export class Game {
     );
   }
 
+  get turnPlayerId(): string {
+    return this.players[this.turnPlayerIndex].id;
+  }
+
   toObject(): GameObject {
     return {
       players: this.players,

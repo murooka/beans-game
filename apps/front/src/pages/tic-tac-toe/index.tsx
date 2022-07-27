@@ -14,7 +14,11 @@ export default function TicTacToeIndex() {
             <a>ソロプレイ</a>
           </Link>
         </li>
-        <li>ルームを作成</li>
+        <li>
+          <Link href="/tic-tac-toe/rooms/new">
+            <a>ルームを作成</a>
+          </Link>
+        </li>
         <li>ルームに参加</li>
       </ul>
     </div>

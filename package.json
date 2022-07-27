@@ -4,24 +4,35 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:front": "npm -w apps/front run dev",
+    "dev:server": "npm -w apps/server run dev",
     "dev:tic-tac-toe": "npm -w packages/tic-tac-toe run dev"
   },
   "private": true,
   "workspaces": [
     "apps/front",
-    "packages/tic-tac-toe"
+    "packages/tic-tac-toe",
+    "apps/server"
   ],
   "devDependencies": {
     "@tsconfig/node16": "1.0.3",
+    "@types/express": "4.17.13",
+    "@types/node": "18.0.6",
+    "@types/react": "18.0.15",
+    "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "5.30.7",
     "@typescript-eslint/parser": "5.30.7",
+    "autoprefixer": "10.4.7",
+    "clsx": "1.2.1",
     "eslint": "8.20.0",
     "eslint-config-next": "12.2.2",
     "eslint-config-prettier": "8.5.0",
     "eslint-import-resolver-typescript": "3.3.0",
     "eslint-plugin-import": "2.26.0",
+    "nodemon": "2.0.19",
     "npm-run-all": "^4.1.5",
+    "postcss": "8.4.14",
     "prettier": "2.7.1",
+    "tailwindcss": "3.1.6",
     "typescript": "4.7.4"
   }
 }
