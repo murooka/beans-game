@@ -12,4 +12,4 @@ export type ClientToServerEvents = {
   put: (roomId: string, y: number, x: number) => void;
 };
 
-export type InterServerEvents = {};
+export type InterServerEvents = { _dummy: () => void };

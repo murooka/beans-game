@@ -5,7 +5,9 @@
     "dev": "run-p dev:*",
     "dev:front": "npm -w apps/front run dev",
     "dev:server": "npm -w apps/server run dev",
-    "dev:t3": "npm -w packages/t3 run dev"
+    "dev:t3": "npm -w packages/t3 run dev",
+    "checkup": "npm run checkup --workspaces",
+    "fix": "npm run checkup --workspaces"
   },
   "private": true,
   "workspaces": [

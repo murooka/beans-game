@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "checkup": "prettier --check ./src && eslint ./src && tsc --noEmit",
+    "fix": "npm run format && npm run lint",
+    "lint": "next lint",
+    "format": "prettier -w ./src"
   },
   "dependencies": {
     "js-cookie": "3.0.1",

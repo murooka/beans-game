@@ -6,6 +6,10 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc -w"
+    "dev": "tsc -w",
+    "checkup": "prettier --check ./src && eslint ./src && tsc --noEmit",
+    "fix": "npm run format && npm run lint",
+    "lint": "eslint --fix ./src",
+    "format": "prettier -w ./src"
   }
 }
