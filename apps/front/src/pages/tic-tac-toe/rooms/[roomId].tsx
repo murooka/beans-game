@@ -27,52 +27,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
   return { props: { roomId } };
 };
 
-type ViewPlayingProps = {
-  roomId: string;
-  playerId: string;
-  initialGame: Game;
-};
-const ViewPlaying = (props: ViewPlayingProps) => {
-  const [game, setGame] = useState(props.initialGame);
-  useEffect(() => {
-    const gameChanged = (roomId: string, object: GameObject) => {
-      setGame(Game.fromObject(object));
-    };
-    socket.on("gameChanged", gameChanged);
-    return () => {
-      socket.off("gameChanged", gameChanged);
-    };
-  });
-  const onPut = (y: number, x: number) => {
-    socket.emit("put", props.roomId, y, x);
-  };
-  const getPlayerName = (playerId: string): string => {
-    return playerId === props.playerId ? "あなた" : "あいて";
-  };
-  return (
-    <div>
-      <GameArea
-        game={game}
-        canMutate={props.playerId === game.turnPlayerId}
-        onPut={onPut}
-        playerName={getPlayerName}
-      />
-    </div>
-  );
-};
-
-type ViewWaitingProps = { roomId: string };
-const ViewWaiting = (props: ViewWaitingProps) => {
-  return (
-    <div>
-      <div>waiting</div>
-      <div>Room ID : {props.roomId}</div>
-    </div>
-  );
-};
-
-export default function TicTacToeRoomsId(props: Props) {
-  const playerId = getOrCreateAnonymousPlayerId();
+const useGame = (roomId: string, playerId: string) => {
   const [game, setGame] = useState<Game | null>(null);
 
   useEffect(() => {
@@ -80,21 +35,47 @@ export default function TicTacToeRoomsId(props: Props) {
       console.log(`gameStarted`);
       setGame(Game.fromObject(game));
     };
+    const gameChanged = (roomId: string, object: GameObject) => {
+      setGame(Game.fromObject(object));
+    };
 
+    socket.emit("joinRoom", roomId, playerId);
     socket.on("gameStarted", gameStarted);
+    socket.on("gameChanged", gameChanged);
+
     return () => {
       socket.off("gameStarted", gameStarted);
+      socket.off("gameChanged", gameChanged);
     };
-  }, []);
-
-  const roomId = props.roomId;
-  useEffect(() => {
-    socket.emit("joinRoom", roomId, playerId);
   }, [roomId, playerId]);
 
+  const put = (y: number, x: number) => {
+    socket.emit("put", roomId, y, x);
+  };
+
+  return { game, put };
+};
+
+export default function TicTacToeRoomsId(props: Props) {
+  const playerId = getOrCreateAnonymousPlayerId();
+  const { game, put } = useGame(props.roomId, playerId);
+
+  const getPlayerName = (_: string): string =>
+    _ === playerId ? "あなた" : "あいて";
+
   return game ? (
-    <ViewPlaying roomId={roomId} playerId={playerId} initialGame={game} />
+    <div>
+      <GameArea
+        game={game}
+        canMutate={playerId === game.turnPlayerId}
+        onPut={put}
+        playerName={getPlayerName}
+      />
+    </div>
   ) : (
-    <ViewWaiting roomId={roomId} />
+    <div>
+      <div>waiting</div>
+      <div>Room ID : {props.roomId}</div>
+    </div>
   );
 }

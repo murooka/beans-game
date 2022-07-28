@@ -54,6 +54,15 @@ function main() {
 
       socket.data.playerId = playerId;
 
+      const room = await roomRepository.get(roomId);
+      if (room) {
+        if (!room.game.players.map((_) => _.id).includes(playerId)) return;
+
+        await socket.join(roomId);
+        socket.emit("gameChanged", roomId, room.game.toObject());
+        return;
+      }
+
       const roomBuilder = await builderRepository.get(roomId);
       if (roomBuilder == null) return;
 
