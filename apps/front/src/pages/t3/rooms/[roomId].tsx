@@ -39,18 +39,18 @@ const useGame = (roomId: string, playerId: string) => {
       setGame(Game.fromObject(object));
     };
 
-    socket.emit("joinRoom", roomId, playerId);
-    socket.on("gameStarted", gameStarted);
-    socket.on("gameChanged", gameChanged);
+    socket.emit("t3/join-room", roomId, playerId);
+    socket.on("t3/game-started", gameStarted);
+    socket.on("t3/game-changed", gameChanged);
 
     return () => {
-      socket.off("gameStarted", gameStarted);
-      socket.off("gameChanged", gameChanged);
+      socket.off("t3/game-started", gameStarted);
+      socket.off("t3/game-changed", gameChanged);
     };
   }, [roomId, playerId]);
 
   const put = (y: number, x: number) => {
-    socket.emit("put", roomId, y, x);
+    socket.emit("t3/put", roomId, y, x);
   };
 
   return { game, put };

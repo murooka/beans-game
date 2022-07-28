@@ -10,14 +10,14 @@ export const setupT3Websocket = (io: SocketIOServer, registry: Registry) => {
   io.on("connection", (socket) => {
     console.log("t3 socket connected");
 
-    socket.on("createRoom", async () => {
+    socket.on("t3/create-room", async () => {
       const roomBuilder = new RoomBuilder();
       await roomBuilderRepository.save(roomBuilder);
 
-      socket.emit("roomCreated", roomBuilder.roomId);
+      socket.emit("t3/room-created", roomBuilder.roomId);
     });
 
-    socket.on("joinRoom", async (roomId, playerId) => {
+    socket.on("t3/join-room", async (roomId, playerId) => {
       console.log(`joinRoom: ` + JSON.stringify({ roomId, playerId }));
 
       socket.data.playerId = playerId;
@@ -27,7 +27,7 @@ export const setupT3Websocket = (io: SocketIOServer, registry: Registry) => {
         if (!room.game.players.map((_) => _.id).includes(playerId)) return;
 
         await socket.join(roomId);
-        socket.emit("gameChanged", roomId, room.game.toObject());
+        socket.emit("t3/game-changed", roomId, room.game.toObject());
         return;
       }
 
@@ -41,11 +41,11 @@ export const setupT3Websocket = (io: SocketIOServer, registry: Registry) => {
       if (roomBuilder.isReady) {
         const room = roomBuilder.build();
         await roomRepository.save(room);
-        io.in(roomId).emit("gameStarted", roomId, room.game.toObject());
+        io.in(roomId).emit("t3/game-started", roomId, room.game.toObject());
       }
     });
 
-    socket.on("put", async (roomId, y, x) => {
+    socket.on("t3/put", async (roomId, y, x) => {
       console.log(JSON.stringify({ roomId, y, x }));
 
       const { playerId } = socket.data;
@@ -58,7 +58,7 @@ export const setupT3Websocket = (io: SocketIOServer, registry: Registry) => {
       room.game.put(y, x);
       await roomRepository.save(room);
 
-      io.in(roomId).emit("gameChanged", roomId, room.game.toObject());
+      io.in(roomId).emit("t3/game-changed", roomId, room.game.toObject());
     });
   });
 };

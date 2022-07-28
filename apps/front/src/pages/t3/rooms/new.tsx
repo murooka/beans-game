@@ -15,14 +15,14 @@ export default function TicTacToeRoomsNew() {
       console.log(id);
       router.push(`/t3/rooms/${id}`);
     };
-    socket.on("roomCreated", roomCreated);
+    socket.on("t3/room-created", roomCreated);
     return () => {
-      socket.off("roomCreated", roomCreated);
+      socket.off("t3/room-created", roomCreated);
     };
   }, [router]);
 
   const onClick = () => {
-    socket.emit("createRoom");
+    socket.emit("t3/create-room");
   };
   return (
     <div>
