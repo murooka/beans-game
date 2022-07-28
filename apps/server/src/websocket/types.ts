@@ -1,5 +1,5 @@
 import type { Server } from "socket.io";
-import type T3 from "tic-tac-toe";
+import type T3 from "t3";
 
 export type SocketData = {
   playerId?: string | undefined;

@@ -5,17 +5,17 @@ export default function TicTacToeIndex() {
     <div>
       <ul>
         <li>
-          <Link href="/tic-tac-toe/local">
+          <Link href="/t3/local">
             <a>ローカルプレイ</a>
           </Link>
         </li>
         <li>
-          <Link href="/tic-tac-toe/solo">
+          <Link href="/t3/solo">
             <a>ソロプレイ</a>
           </Link>
         </li>
         <li>
-          <Link href="/tic-tac-toe/rooms/new">
+          <Link href="/t3/rooms/new">
             <a>ルームを作成</a>
           </Link>
         </li>

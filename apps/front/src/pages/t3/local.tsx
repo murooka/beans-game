@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Game } from "tic-tac-toe";
+import { Game } from "t3";
 
 import { GameArea } from "../../components/GameArea";
 

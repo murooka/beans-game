@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import type { Game } from "tic-tac-toe";
+import type { Game } from "t3";
 
 const Nought = () => {
   return (

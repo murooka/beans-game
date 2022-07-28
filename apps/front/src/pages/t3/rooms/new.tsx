@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import type { Socket } from "socket.io-client";
 import { io } from "socket.io-client";
-import type { ClientToServerEvents, ServerToClientEvents } from "tic-tac-toe";
+import type { ClientToServerEvents, ServerToClientEvents } from "t3";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
   "http://localhost:4000"
@@ -13,7 +13,7 @@ export default function TicTacToeRoomsNew() {
   useEffect(() => {
     const roomCreated = (id: string) => {
       console.log(id);
-      router.push(`/tic-tac-toe/rooms/${id}`);
+      router.push(`/t3/rooms/${id}`);
     };
     socket.on("roomCreated", roomCreated);
     return () => {

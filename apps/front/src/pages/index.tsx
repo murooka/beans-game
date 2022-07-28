@@ -5,7 +5,7 @@ export default function Index() {
     <div>
       <ul>
         <li>
-          <Link href="/tic-tac-toe">
+          <Link href="/t3">
             <a>◯×ゲーム</a>
           </Link>
         </li>

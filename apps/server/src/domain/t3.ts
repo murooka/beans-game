@@ -1,7 +1,7 @@
 import { randomBytes } from "crypto";
 
-import type { Player } from "tic-tac-toe";
-import { Game } from "tic-tac-toe";
+import type { Player } from "t3";
+import { Game } from "t3";
 
 export class RoomBuilder {
   constructor(

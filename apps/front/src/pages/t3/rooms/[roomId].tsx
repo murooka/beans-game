@@ -2,12 +2,12 @@ import type { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import type { Socket } from "socket.io-client";
 import { io } from "socket.io-client";
-import { Game } from "tic-tac-toe";
+import { Game } from "t3";
 import type {
   ClientToServerEvents,
   GameObject,
   ServerToClientEvents,
-} from "tic-tac-toe";
+} from "t3";
 
 import { GameArea } from "../../../components/GameArea";
 import { firstOrNull } from "../../../lib/data";

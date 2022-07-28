@@ -5,13 +5,12 @@
     "dev": "run-p dev:*",
     "dev:front": "npm -w apps/front run dev",
     "dev:server": "npm -w apps/server run dev",
-    "dev:tic-tac-toe": "npm -w packages/tic-tac-toe run dev"
+    "dev:t3": "npm -w packages/t3 run dev"
   },
   "private": true,
   "workspaces": [
-    "apps/front",
-    "packages/tic-tac-toe",
-    "apps/server"
+    "apps/*",
+    "packages/*"
   ],
   "devDependencies": {
     "@tsconfig/node16": "1.0.3",
