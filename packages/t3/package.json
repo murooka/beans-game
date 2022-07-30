@@ -10,6 +10,8 @@
     "checkup": "prettier --check ./src && eslint ./src && tsc --noEmit",
     "fix": "npm run format && npm run lint",
     "lint": "eslint --fix ./src",
-    "format": "prettier -w ./src"
+    "format": "prettier -w ./src",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   }
 }
