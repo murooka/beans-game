@@ -24,7 +24,10 @@ export const setupT3Websocket = (io: SocketIOServer, registry: Registry) => {
 
       const room = await roomRepository.get(roomId);
       if (room) {
-        if (!room.game.players.map((_) => _.id).includes(playerId)) return;
+        if (!room.game.players.map((_) => _.id).includes(playerId)) {
+          socket.emit("t3/room-full", roomId);
+          return;
+        }
 
         await socket.join(roomId);
         socket.emit("t3/game-changed", roomId, room.game.toObject());

@@ -2,6 +2,7 @@ import type { GameObject } from "./game";
 
 export type ServerToClientEvents = {
   "t3/room-created": (roomId: string) => void;
+  "t3/room-full": (roomId: string) => void;
   "t3/game-started": (roomId: string, game: GameObject) => void;
   "t3/game-changed": (roomId: string, game: GameObject) => void;
   "t3/game-restarted": (roomId: string, game: GameObject) => void;

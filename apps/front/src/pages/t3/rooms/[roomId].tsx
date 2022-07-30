@@ -1,4 +1,5 @@
 import type { GetServerSideProps } from "next";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Socket } from "socket.io-client";
 import { io } from "socket.io-client";
@@ -10,6 +11,7 @@ import type {
 } from "t3";
 
 import { GameArea } from "../../../components/GameArea";
+import { SystemButton } from "../../../components/SystemButton";
 import { API_ORIGIN, WEB_ORIGIN } from "../../../config";
 import { firstOrNull } from "../../../lib/data";
 import { getOrCreateAnonymousPlayerId } from "../../../lib/storage";
@@ -29,11 +31,15 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 
 const useGame = (roomId: string, playerId: string) => {
   const [game, setGame] = useState<Game | null>(null);
+  const [full, setFull] = useState(false);
 
   useEffect(() => {
     const gameStarted = (roomId: string, game: GameObject) => {
       console.log(`gameStarted`);
       setGame(Game.fromObject(game));
+    };
+    const roomFull = () => {
+      setFull(true);
     };
     const gameChanged = (roomId: string, object: GameObject) => {
       setGame(Game.fromObject(object));
@@ -44,11 +50,13 @@ const useGame = (roomId: string, playerId: string) => {
 
     socket.emit("t3/join-room", roomId, playerId);
     socket.on("t3/game-started", gameStarted);
+    socket.on("t3/room-full", roomFull);
     socket.on("t3/game-changed", gameChanged);
     socket.on("t3/game-restarted", gameRestarted);
 
     return () => {
       socket.off("t3/game-started", gameStarted);
+      socket.off("t3/room-full", roomFull);
       socket.off("t3/game-changed", gameChanged);
       socket.off("t3/game-restarted", gameRestarted);
     };
@@ -62,19 +70,30 @@ const useGame = (roomId: string, playerId: string) => {
     socket.emit("t3/restart-game", roomId);
   };
 
-  return { game, put, restart };
+  return { game, full, put, restart };
 };
 
 export default function TicTacToeRoomsId(props: Props) {
   const playerId = getOrCreateAnonymousPlayerId();
-  const { game, put, restart } = useGame(props.roomId, playerId);
+  const { game, full, put, restart } = useGame(props.roomId, playerId);
 
   const getPlayerName = (_: string): string =>
     _ === playerId ? "あなた" : "あいて";
 
   const roomUrl = `${WEB_ORIGIN}/t3/rooms/${props.roomId}`;
 
-  return game ? (
+  return full ? (
+    <div className="w-full h-screen flex flex-col justify-center items-center">
+      <div>満員です</div>
+      <div className="mt-4">
+        <Link href="/t3">
+          <a>
+            <SystemButton>ゲームメニューに戻る</SystemButton>
+          </a>
+        </Link>
+      </div>
+    </div>
+  ) : game ? (
     <div className="w-full h-screen flex justify-center items-center">
       <GameArea
         game={game}
