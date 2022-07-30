@@ -39,7 +39,12 @@ export class RoomBuilderRepository {
 }
 
 export class Room {
-  constructor(public readonly id: string, public readonly game: Game) {}
+  constructor(public readonly id: string, public game: Game) {}
+
+  restart() {
+    const newGame = new Game(this.game.players);
+    this.game = newGame;
+  }
 }
 
 export class RoomRepository {

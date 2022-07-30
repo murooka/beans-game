@@ -38,14 +38,19 @@ const useGame = (roomId: string, playerId: string) => {
     const gameChanged = (roomId: string, object: GameObject) => {
       setGame(Game.fromObject(object));
     };
+    const gameRestarted = (roomId: string, object: GameObject) => {
+      setGame(Game.fromObject(object));
+    };
 
     socket.emit("t3/join-room", roomId, playerId);
     socket.on("t3/game-started", gameStarted);
     socket.on("t3/game-changed", gameChanged);
+    socket.on("t3/game-restarted", gameRestarted);
 
     return () => {
       socket.off("t3/game-started", gameStarted);
       socket.off("t3/game-changed", gameChanged);
+      socket.off("t3/game-restarted", gameRestarted);
     };
   }, [roomId, playerId]);
 
@@ -53,12 +58,16 @@ const useGame = (roomId: string, playerId: string) => {
     socket.emit("t3/put", roomId, y, x);
   };
 
-  return { game, put };
+  const restart = () => {
+    socket.emit("t3/restart-game", roomId);
+  };
+
+  return { game, put, restart };
 };
 
 export default function TicTacToeRoomsId(props: Props) {
   const playerId = getOrCreateAnonymousPlayerId();
-  const { game, put } = useGame(props.roomId, playerId);
+  const { game, put, restart } = useGame(props.roomId, playerId);
 
   const getPlayerName = (_: string): string =>
     _ === playerId ? "あなた" : "あいて";
@@ -72,6 +81,8 @@ export default function TicTacToeRoomsId(props: Props) {
         canMutate={playerId === game.turnPlayerId}
         onPut={put}
         playerName={getPlayerName}
+        canRestart={game.players[0].id === playerId}
+        onRestart={restart}
       />
     </div>
   ) : (

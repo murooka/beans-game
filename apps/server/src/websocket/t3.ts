@@ -60,5 +60,19 @@ export const setupT3Websocket = (io: SocketIOServer, registry: Registry) => {
 
       io.in(roomId).emit("t3/game-changed", roomId, room.game.toObject());
     });
+
+    socket.on("t3/restart-game", async (roomId) => {
+      const { playerId } = socket.data;
+      if (playerId == null) return;
+
+      const room = await roomRepository.get(roomId);
+      if (room == null) return;
+      if (room.game.gameResult == null) return;
+
+      room.restart();
+      await roomRepository.save(room);
+
+      io.in(roomId).emit("t3/game-restarted", roomId, room.game.toObject());
+    });
   });
 };
