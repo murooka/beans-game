@@ -10,12 +10,12 @@ import type {
 } from "t3";
 
 import { GameArea } from "../../../components/GameArea";
+import { API_ORIGIN, WEB_ORIGIN } from "../../../config";
 import { firstOrNull } from "../../../lib/data";
 import { getOrCreateAnonymousPlayerId } from "../../../lib/storage";
 
-const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-  "http://localhost:4000"
-);
+const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+  io(API_ORIGIN);
 
 type Props = {
   roomId: string;
@@ -72,7 +72,7 @@ export default function TicTacToeRoomsId(props: Props) {
   const getPlayerName = (_: string): string =>
     _ === playerId ? "あなた" : "あいて";
 
-  const roomUrl = `/t3/rooms/${props.roomId}`;
+  const roomUrl = `${WEB_ORIGIN}/t3/rooms/${props.roomId}`;
 
   return game ? (
     <div className="w-full h-screen flex justify-center items-center">

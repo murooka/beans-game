@@ -1,0 +1,22 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": ["**/*"],
+    "rewrites": [
+      {
+        "source": "/",
+        "run": {
+          "serviceId": "web",
+          "region": "asia-northeast1"
+        }
+      },
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "web",
+          "region": "asia-northeast1"
+        }
+      }
+    ]
+  }
+}

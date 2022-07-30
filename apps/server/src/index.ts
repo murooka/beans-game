@@ -3,6 +3,7 @@ import * as http from "http";
 import express from "express";
 import { Server } from "socket.io";
 
+import { config } from "./config";
 import { createRegistry } from "./registry";
 import { setupT3Websocket } from "./websocket/t3";
 import type {
@@ -25,7 +26,7 @@ function main() {
     SocketData
   >(server, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: config.WEB_ORIGIN,
       methods: ["GET", "POST"],
     },
   });

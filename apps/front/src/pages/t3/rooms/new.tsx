@@ -5,10 +5,10 @@ import { io } from "socket.io-client";
 import type { ClientToServerEvents, ServerToClientEvents } from "t3";
 
 import { SystemButton } from "../../../components/SystemButton";
+import { API_ORIGIN } from "../../../config";
 
-const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-  "http://localhost:4000"
-);
+const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+  io(API_ORIGIN);
 
 export default function TicTacToeRoomsNew() {
   const router = useRouter();

@@ -3,17 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon --ext ts --exec ts-node src/index.ts",
+    "dev": "APP_ENV=local nodemon --ext ts --exec ts-node src/index.ts",
     "checkup": "prettier --check ./src && eslint ./src && tsc --noEmit && vitest run",
     "fix": "npm run format && npm run lint",
     "lint": "eslint --fix ./src",
     "format": "prettier -w ./src",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "build": "npx esbuild src/index.ts --bundle --sourcemap --legal-comments=none --platform=node --outfile=dist/index.js",
+    "deploy": "APP_ENV=prod PROJECT=bp-game run-s deploy:*",
+    "deploy:1": "npm run build",
+    "deploy:2": "gcloud --project $PROJECT --quiet run deploy api --platform managed --region asia-northeast1 --source . --allow-unauthenticated --max-instances 1 --set-env-vars=APP_ENV=prod",
+    "start": "node -r source-map-support/register ./dist/index.js"
   },
   "dependencies": {
     "express": "4.18.1",
-    "socket.io": "4.5.1"
+    "socket.io": "4.5.1",
+    "source-map-support": "0.5.21"
   },
   "devDependencies": {
     "socket.io-client": "4.5.1"

@@ -1,0 +1,10 @@
+node_modules
+/.eslintrc.json
+/.gitignore
+/coverage
+/next-env.d.ts
+/postcss.config.js
+/src
+/tailwind.config.js
+/tsconfig.json
+/tsconfig.tsbuildinfo
