@@ -63,8 +63,10 @@ export default function TicTacToeRoomsId(props: Props) {
   const getPlayerName = (_: string): string =>
     _ === playerId ? "あなた" : "あいて";
 
+  const roomUrl = `/t3/rooms/${props.roomId}`;
+
   return game ? (
-    <div>
+    <div className="w-full h-screen flex justify-center items-center">
       <GameArea
         game={game}
         canMutate={playerId === game.turnPlayerId}
@@ -73,9 +75,16 @@ export default function TicTacToeRoomsId(props: Props) {
       />
     </div>
   ) : (
-    <div>
-      <div>waiting</div>
-      <div>Room ID : {props.roomId}</div>
+    <div className="w-full h-screen flex flex-col justify-center items-center">
+      <div>参加者待ち</div>
+      <div className="mt-2 flex">
+        <input
+          type="text"
+          readOnly
+          value={roomUrl}
+          className="border rounded px-2 py-1"
+        />
+      </div>
     </div>
   );
 }

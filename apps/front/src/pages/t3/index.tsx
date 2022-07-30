@@ -1,25 +1,35 @@
 import Link from "next/link";
 
+import { SystemButton } from "../../components/SystemButton";
+
 export default function TicTacToeIndex() {
   return (
-    <div>
-      <ul>
-        <li>
+    <div className="w-full h-screen">
+      <ul className="w-full h-full flex flex-col justify-center items-center gap-y-4">
+        <li className="w-48">
           <Link href="/t3/local">
-            <a>ローカルプレイ</a>
+            <a>
+              <SystemButton className="w-full">ローカルプレイ</SystemButton>
+            </a>
           </Link>
         </li>
-        <li>
+        <li className="w-48">
           <Link href="/t3/solo">
-            <a>ソロプレイ</a>
+            <a>
+              <SystemButton className="w-full">ソロプレイ</SystemButton>
+            </a>
           </Link>
         </li>
-        <li>
+        <li className="w-48">
           <Link href="/t3/rooms/new">
-            <a>ルームを作成</a>
+            <a>
+              <SystemButton className="w-full">部屋を作成</SystemButton>
+            </a>
           </Link>
         </li>
-        <li>ルームに参加</li>
+        <li className="w-48">
+          <SystemButton className="w-full">部屋に参加</SystemButton>
+        </li>
       </ul>
     </div>
   );

@@ -56,7 +56,7 @@ export const GameArea = (props: GameAreaProps) => {
       return "?";
     });
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center gap-y-12">
+    <div className="flex flex-col justify-center items-center gap-y-12">
       <div className="w-48 h-48 border border-gray-700">
         {props.game.cells.map((lineCells, y) => (
           <div key={y} className="flex">

@@ -4,6 +4,8 @@ import type { Socket } from "socket.io-client";
 import { io } from "socket.io-client";
 import type { ClientToServerEvents, ServerToClientEvents } from "t3";
 
+import { SystemButton } from "../../../components/SystemButton";
+
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
   "http://localhost:4000"
 );
@@ -25,8 +27,8 @@ export default function TicTacToeRoomsNew() {
     socket.emit("t3/create-room");
   };
   return (
-    <div>
-      <button onClick={onClick}>ルームを作成</button>
+    <div className="w-full h-screen flex justify-center items-center">
+      <SystemButton onClick={onClick}>ルームを作成</SystemButton>
     </div>
   );
 }
